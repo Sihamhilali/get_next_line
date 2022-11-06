@@ -1,0 +1,3 @@
+siham hilali 1337 khouribga.
+Many processors expect memory for variables to be aligned based on the size
+and ‘double’, it takes up 4 and 8 bytes respectively.
