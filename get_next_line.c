@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 11:59:37 by selhilal          #+#    #+#             */
-/*   Updated: 2022/11/06 19:20:51 by selhilal         ###   ########.fr       */
+/*   Updated: 2022/11/07 15:54:43 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*next(char *str)
 		free (str);
 		return (NULL);
 	}
-	ptr = (char *)malloc(sizeof(char) * (ft_strlen(str) - i + 1));
+	ptr = (char *)malloc(sizeof(char) * (ft_strlen(str + i) + 1));
 	if (!ptr)
 		return (NULL);
 	i++;
@@ -57,7 +57,7 @@ char	*next(char *str)
 	while (str[i])
 		ptr[c++] = str[i++];
 	ptr[c] = '\0';
-	free(str);
+	// free(str);
 	return (ptr);
 }
 
@@ -102,10 +102,13 @@ char	*get_next_line(int fd)
 
 int main()
 {
-    int fd;
-    char *tab;
-   fd = open("siham.txt" , O_RDONLY);
-    tab = get_next_line(fd);
-    printf("%s\n" , tab);
-    return 0;
+    //int fd = open("siham.txt" , O_RDONLY);
+	//printf("%s\n" , get_next_line(fd));
+    //return 0;
+	//char	*buffer;
+
+	//buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	//read(fd, buffer, BUFFER_SIZE);
+	//   printf("%s\n" , 	buffer);
+    //return 0;
 }

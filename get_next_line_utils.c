@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 12:03:37 by selhilal          #+#    #+#             */
-/*   Updated: 2022/11/06 19:18:24 by selhilal         ###   ########.fr       */
+/*   Updated: 2022/11/07 15:50:08 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strchr(const char *str, int c)
 	int		i;
 
 	i = 0;
+	if (!str)
+		return (NULL);
 	while (str[i])
 	{
 		if (str[i] == (char)c)
@@ -94,5 +96,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_memcpy(ptr1, s1, ft_strlen(s1));
 	ft_memcpy(ptr1 + ft_strlen(s1), s2, ft_strlen(s2));
 	ptr1[j] = '\0';
+	free(s1);
 	return (ptr1);
 }
