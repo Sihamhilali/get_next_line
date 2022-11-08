@@ -6,13 +6,13 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 12:03:37 by selhilal          #+#    #+#             */
-/*   Updated: 2022/11/07 15:50:08 by selhilal         ###   ########.fr       */
+/*   Updated: 2022/11/08 14:31:57 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strchr(const char *str, int c)
+char	*ft_strchr(char *str, int c)
 {
 	int		i;
 
@@ -30,7 +30,7 @@ char	*ft_strchr(const char *str, int c)
 	return (NULL);
 }
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen(char *s)
 {
 	size_t	i;
 
@@ -44,7 +44,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+void	*ft_memcpy(void *dest, void *src, size_t n)
 {
 	char	*copied;
 	char	*becopied;
@@ -63,7 +63,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	return (dest);
 }
 
-char	*ft_strdup(const char *string)
+char	*ft_strdup(char *string)
 {
 	int		i;
 	char	*ptr;
@@ -81,8 +81,25 @@ char	*ft_strdup(const char *string)
 	return (ptr);
 }
 
+void	*ft_memmove(void *dest, void *src, size_t n)
+{
+	char	*d;
+	char	*s;
 
-char	*ft_strjoin(char const *s1, char const *s2)
+	d = (char *)dest;
+	s = (char *)src;
+	if (s < d)
+	{
+		while (n-- > 0)
+		{
+			d[n] = s[n];
+		}
+		return (dest);
+	}
+	return (ft_memcpy(dest, src, n));
+}
+
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*ptr1;
 	size_t	j;
@@ -93,9 +110,10 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ptr1 = malloc (j + 1);
 	if (!ptr1)
 		return (NULL);
-	ft_memcpy(ptr1, s1, ft_strlen(s1));
-	ft_memcpy(ptr1 + ft_strlen(s1), s2, ft_strlen(s2));
+	ft_memmove(ptr1, s1, ft_strlen(s1));
+	ft_memmove(ptr1 + ft_strlen(s1), s2, ft_strlen(s2));
 	ptr1[j] = '\0';
-	free(s1);
+	//free(s1);
+	s1 = 0;
 	return (ptr1);
 }
