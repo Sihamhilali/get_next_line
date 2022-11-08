@@ -12,19 +12,17 @@
 
 #include "get_next_line.h"
 
-char	*next_line(char *str)
+char	*ft_write(char *str)
 {
 	int		i;
 	char	*ptr;
 
 	i = 0;
-	if (!str)
-		return (0);
+	if (!str[i])
+		return (NULL);
 	while (str[i] && str[i] != '\n')
 		i++;
-	if (str[i] == '\n')
-		i++;
-	ptr = (char *)malloc(sizeof(char) * (i + 1));
+	ptr = (char *)malloc(sizeof(char) * (i + 2));
 	if (!ptr)
 		return (0);
 	i = -1;
@@ -39,14 +37,14 @@ char	*next_line(char *str)
 	return (ptr);
 }
 
-char	*next(char *str)
+char	*save(char *str)
 {
 	int		i;
 	char	*ptr;
 	int		c;
 
 	i = 0;
-	while (str[i] && str[i] != '\n')
+	while (str[i] != '\n' && str[i])
 		i++;
 	if (!str[i])
 	{
@@ -56,8 +54,7 @@ char	*next(char *str)
 	ptr = (char *)malloc(sizeof(char) * (ft_strlen(str + i) + 1));
 	if (!ptr)
 		return (NULL);
-	if (str[i] == '\n')
-		i++;
+	i++;
 	c = 0;
 	while (str[i])
 		ptr[c++] = str[i++];
@@ -66,29 +63,28 @@ char	*next(char *str)
 	return (ptr);
 }
 
-char	*ft_read(int fd, char *str)
+char	*ft_read(int fd, char *static_buffer)
 {
 	char	*buffer;
-	int		s;
+	int		size;
 
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
-	s = 1;
-	while (s != 0 && !ft_strchr(str, '\n'))
+	size = 1;
+	while (!ft_strchr(static_buffer, '\n') && size != 0)
 	{
-		s = read(fd, buffer, BUFFER_SIZE);
-		if (s == -1)
+		size = read(fd, buffer, BUFFER_SIZE);
+		if (size == -1)
 		{
 			free(buffer);
 			return (NULL);
 		}
-		buffer[s] = '\0';
-		str = ft_strjoin(str, buffer);
-
+		buffer[size] = '\0';
+		static_buffer = ft_strjoin(static_buffer, buffer);
 	}
 	free(buffer);
-	return (str);
+	return (static_buffer);
 }
 
 char	*get_next_line(int fd)
@@ -100,44 +96,14 @@ char	*get_next_line(int fd)
 	str = ft_read(fd, str);
 	if (!str)
 		return (NULL);
-	ptr = next_line(str);
-	str = next(str);
+	ptr = ft_write(str);
+	str = save(str);
 	return (ptr);
 }
 
 int main()
 {
  	int fd = open("siham.txt" , O_RDONLY);
-	char	*buffer;
-  
-  printf("%s" , get_next_line(fd));
-  printf("%s" , get_next_line(fd));
-  printf("%s" , get_next_line(fd));
-   printf("%s" , get_next_line(fd));
-  printf("%s" , get_next_line(fd));
-  printf("%s" , get_next_line(fd));
-   printf("%s" , get_next_line(fd));
-  printf("%s" , get_next_line(fd));
-  printf("%s" , get_next_line(fd));
-   printf("%s" , get_next_line(fd));
-  printf("%s" , get_next_line(fd));
-  printf("%s" , get_next_line(fd));
-   printf("%s" , get_next_line(fd));
-  printf("%s" , get_next_line(fd));
-  printf("%s" , get_next_line(fd));
-   printf("%s" , get_next_line(fd));
-  printf("%s" , get_next_line(fd));
-  printf("%s" , get_next_line(fd));
-   printf("%s" , get_next_line(fd));
-  printf("%s" , get_next_line(fd));
-  printf("%s" , get_next_line(fd));
-   printf("%s" , get_next_line(fd));
-  printf("%s" , get_next_line(fd));
-  printf("%s" , get_next_line(fd));
-   printf("%s" , get_next_line(fd));
-  printf("%s" , get_next_line(fd));
-  printf("%s" , get_next_line(fd));
-   printf("%s" , get_next_line(fd));
-  printf("%s" , get_next_line(fd));
-  printf("%s" , get_next_line(fd));
+  	printf("%s" , get_next_line(fd));
+  	
 }
