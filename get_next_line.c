@@ -18,7 +18,7 @@ char	*ft_write(char *str)
 	char	*ptr;
 
 	i = 0;
-	if (!str[i])
+	if (!str)
 		return (NULL);
 	while (str[i] && str[i] != '\n')
 		i++;
@@ -105,5 +105,4 @@ int main()
 {
  	int fd = open("siham.txt" , O_RDONLY);
   	printf("%s" , get_next_line(fd));
-  	
 }
