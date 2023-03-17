@@ -5,110 +5,91 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/08 10:47:04 by selhilal          #+#    #+#             */
-/*   Updated: 2022/11/08 10:54:44 by selhilal         ###   ########.fr       */
+/*   Created: 2023/03/17 18:47:00 by selhilal          #+#    #+#             */
+/*   Updated: 2023/03/17 19:49:57 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"get_next_line_bonus.h"
-char	*ft_write(char *str)
+#include "get_next_line_bonus.h"
+
+char	*full_file(char *txt)
 {
 	int		i;
-	char	*ptr;
+	char	*typ;
 
 	i = 0;
-	if (!str[i])
+	if (!txt[i])
 		return (NULL);
-	while (str[i] && str[i] != '\n')
+	while (txt[i] && txt[i] != '\n')
 		i++;
-	ptr = (char *)malloc(sizeof(char) * (i + 2));
-	if (!ptr)
+	typ = (char *)malloc(sizeof(char) * (i + 2));
+	if (!typ)
 		return (0);
 	i = -1;
-	while (str[++i] && str[i] != '\n')
-		ptr[i] = str[i];
-	if (str[i] == '\n')
+	while (txt[++i] && txt[i] != '\n')
+		typ[i] = txt[i];
+	if (txt[i] == '\n')
 	{
-		ptr[i] = str[i];
+		typ[i] = txt[i];
 		i++;
 	}
-	ptr[i] = '\0';
-	return (ptr);
+	typ[i] = '\0';
+	return (typ);
 }
 
-char	*save(char *str)
+void	ft_free(void **fre)
+{
+	free(*fre);
+	*fre = NULL;
+}
+
+char	*full_line(char *txt)
 {
 	int		i;
-	char	*ptr;
-	int		c;
+	char	*string;
 
 	i = 0;
-	while (str[i] != '\n' && str[i])
+	while (txt[i] != '\n' && txt[i] != '\0')
 		i++;
-	if (!str[i])
+	if (txt[i] == '\0')
+		return (ft_free((void **)&txt), NULL);
+	string = ft_substr(txt, i + 1, ft_strlen(txt) - i);
+	ft_free((void **)&txt);
+	if (!string)
+		return (NULL);
+	if (*string == '\0')
 	{
-		free (str);
+		ft_free((void **)&string);
 		return (NULL);
 	}
-	ptr = (char *)malloc(sizeof(char) * (ft_strlen(str + i) + 1));
-	if (!ptr)
-		return (NULL);
-	i++;
-	c = 0;
-	while (str[i])
-		ptr[c++] = str[i++];
-	ptr[c] = '\0';
-	free(str);
-	return (ptr);
-}
-
-char	*ft_read(int fd, char *static_buffer)
-{
-	char	*buffer;
-	int		size;
-
-	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buffer)
-		return (NULL);
-	size = 1;
-	while (!ft_strchr(static_buffer, '\n') && size != 0)
-	{
-		size = read(fd, buffer, BUFFER_SIZE);
-		if (size == -1)
-		{
-			free(buffer);
-			return (NULL);
-		}
-		buffer[size] = '\0';
-		static_buffer = ft_strjoin(static_buffer, buffer);
-	}
-	free(buffer);
-	return (static_buffer);
+	return (string);
 }
 
 char	*get_next_line(int fd)
 {
-	char		*ptr;
-	static char	*str[10240];
+	char		*typ;
+	char		*buffer;
+	int			size;
+	static char	*tx[10240];
+
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (0);
-	str[fd] = ft_read(fd, str[fd]);
-	if (!str)
 		return (NULL);
-	ptr = ft_write(str[fd]);
-	str[fd] = save(str[fd]);
-	return (ptr);
-}
-int main()
-{
- 	int fd = open("siham.txt" , O_RDONLY);
-  	printf("%s" , get_next_line_bonus(fd));
-    printf("%s" , get_next_line_bonus(fd));
-    printf("%s" , get_next_line_bonus(fd));
-  		int fd = open("siham.txt" , O_RDONLY);
-  	printf("%s" , get_next_line_bonus(fd));
-  	
-    	int fd = open("siham.txt" , O_RDONLY);
-  	printf("%s" , get_next_line_bonus(fd));
-  	
+	buffer = (char *)malloc(BUFFER_SIZE + 1);
+	if (!buffer)
+		return (NULL);
+	size = 1;
+	while (!ft_strchr(tx[fd], '\n') && size != 0)
+	{
+		size = read(fd, buffer, BUFFER_SIZE);
+		if (size < 0)
+			return (ft_free((void **)&buffer), ft_free((void **)&tx[fd]), NULL);
+		buffer[size] = '\0';
+		tx[fd] = ft_strjoin(tx[fd], buffer);
+	}
+	ft_free((void **)&buffer);
+	if (!tx[fd][0] || !tx[fd])
+		return (ft_free((void **)&tx[fd]), tx[fd] = NULL);
+	typ = full_file(tx[fd]);
+	tx[fd] = full_line(tx[fd]);
+	return (typ);
 }
