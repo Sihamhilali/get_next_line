@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 18:47:00 by selhilal          #+#    #+#             */
-/*   Updated: 2023/03/17 19:49:57 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/03/18 15:43:40 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*get_next_line(int fd)
 	char		*typ;
 	char		*buffer;
 	int			size;
-	static char	*tx[10240];
+	static char	*tx[OPEN_MAX];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);

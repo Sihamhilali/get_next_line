@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 12:17:53 by selhilal          #+#    #+#             */
-/*   Updated: 2023/03/17 18:44:48 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/03/18 15:56:07 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ char	*ft_strdup(char *string)
 	return (ptr);
 }
 
-char	*ft_substr(char *s, unsigned int start, size_t len)
+char	*ft_substr(char *s, int start, int len)
 {
 	char	*ptr;
-	size_t	i;
+	int		i;
 
 	if (!s)
 		return (NULL);
@@ -73,9 +73,9 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	return (ptr);
 }
 
-size_t	ft_strlen(char *s)
+int	ft_strlen(char *s)
 {
-	size_t	i;
+	int	i;
 
 	if (!s)
 		return (0);
@@ -87,8 +87,8 @@ size_t	ft_strlen(char *s)
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	size_t	i;
-	size_t	j;
+	int		i;
+	int		j;
 	char	*str;
 
 	if (!s1)
